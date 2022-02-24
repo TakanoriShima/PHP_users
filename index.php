@@ -2,6 +2,8 @@
     // コントローラ(C)
     // 外部ファイルの読みこみ
     require_once 'models/User.php';
+    // セッション開始
+    session_start();
     // 物語開始
     $iwai = new User('岩井', 25, 'male');
     $shima = new User('島', 49, 'male');
@@ -14,6 +16,8 @@
     // array_push($users, $iwai); // users.push(iwai);
     $users[] = $shima;
     $users[] = $yamada;
+    // セッションにユーザー一覧を保存
+    $_SESSION['users'] = $users;
     // var_dump($users);
     // print_r($users);
     // ユーザー一覧表示
