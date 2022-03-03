@@ -13,9 +13,7 @@
             <div class="row mt-3">
                 <h1 class="col-sm-12 text-center text-primary pb-1">ユーザー登録</h1>
             </div>
-            
-            <?php include_once 'views/_messages.php'; ?>
-            
+            <?php include_once 'views/_errors_view.php'; ?>
             <div class="row mt-3">
                 <form class="col-sm-12" action="store.php" method="POST">
                     <!-- 1行 -->
@@ -38,7 +36,7 @@
                     <div class="mt-3 row">
                         <p class="col-2 col-form-label">性別</p> 
                         <div class="form-check form-check-inline col-3">
-                            <input class="form-check-input" type="radio" name="gender" id="male" value="male" <?= ($user->gender === 'male' || $user === null) ? 'checked' : '' ?>>
+                            <input class="form-check-input" type="radio" name="gender" id="male" value="male" <?= $user->gender === 'male' ? 'checked' : '' ?>>
                             <label class="form-check-label" for="male">男性</label>
                         </div>
                         <div class="form-check form-check-inline col-3">

@@ -22,4 +22,17 @@
                 return 'お酒NG' . PHP_EOL;
             }
         }
+        // 入力値を検証するメソッド
+        public function validate(){
+            $errors = array();
+            if($this->name === ''){
+                $errors[] = '名前を入力してください';
+            }
+            if($this->age === ''){
+                $errors[] = '年齢を入力してください';
+            }else if(!preg_match('/^[0-9]+$/', $this->age)){
+                $errors[] = '年齢は正の整数を入力してください';
+            }
+            return $errors;
+        }
     }
