@@ -12,4 +12,7 @@
     if($user === null){
         $user = new User('', '', 'male');
     }
+    
+    // セッションIDを取得
+    $token = session_id();
     include_once 'views/create_view.php';

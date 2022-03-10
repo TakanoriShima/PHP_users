@@ -54,4 +54,23 @@
                 return 'PDO exception: ' . $e->getMessage();
             }
         }
+        
+        // データを1件登録するメソッド
+        public function save(){
+            try {
+                $pdo = self::get_connection();
+                $stmt = $pdo->prepare("INSERT INTO users (name, age, gender) VALUES (:name, :age, :gender)");
+                // バインド処理
+                $stmt->bindParam(':name', $this->name, PDO::PARAM_STR);
+                $stmt->bindParam(':age', $this->age, PDO::PARAM_INT);
+                $stmt->bindParam(':gender', $this->gender, PDO::PARAM_STR);
+                // 実行
+                $stmt->execute();
+                self::close_connection($pdo, $stmt);
+                return $this->name . "さんの新規ユーザー登録が成功しました。";
+                
+            } catch (PDOException $e) {
+                return 'PDO exception: ' . $e->getMessage();
+            }
+        }
     }
