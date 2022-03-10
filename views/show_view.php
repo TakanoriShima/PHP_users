@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>ユーザー一覧</title>
+        <title><?= $user->name ?>さんの詳細</title>
         <link rel="icon" href="images/favicon.ico">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/style.css">
@@ -12,12 +12,7 @@
         <!--ビュー(V)-->
         <div class="container">
             <div class="row mt-2">
-                <h1 class="col-sm-12 text-center text-primary">ユーザー一覧</h1>
-            </div>
-            <?php include_once 'views/_flush_view.php'; ?>
-            <?php if(count($users) !== 0): ?>
-            <div class="row mt-2">
-                <p class="col-sm-12 text-center">現在のユーザーは<?= count($users) ?>人</p>
+                <h1 class="col-sm-12 text-center text-primary"><?= $user->name ?>さんの詳細</h1>
             </div>
             <div class="row mt-2">
                 <table class="table table-bordered table-striped">
@@ -28,24 +23,21 @@
                         <th>性別</th>
                         <th>お酒</th>
                     </tr>
-                    <?php foreach($users as $user): ?>
                     <tr>
-                        <td><a href="show.php?id=<?= $user->id ?>"><?= $user->id ?></a></td>
+                        <td><?= $user->id ?></td>
                         <td><?= $user->name ?></td>
                         <td><?= $user->age ?>歳</td>
                         <td><?= $user->gender === 'male' ? '男性' : '女性' ?></td>
                         <td><?= $user->drink() ?></td>
                     </tr>
-                    <?php endforeach; ?>
                 </table>
             </div>
-            <?php else: ?>
-            <div class="row mt-2">
-                <p class="col-sm-12 text-center text-danger">ユーザーがまだいません</p>
-            </div>
-            <?php endif; ?>
             <div class="row">
-                <a href="create.php" class="btn btn-primary">新規ユーザー登録</a>
+                <a href="index.php" class="offset-sm-3 col-sm-6 btn btn-primary">ユーザー一覧に戻る</a>
+            </div>
+            <div class="row mt-3">
+                <a href="edit.php?id=<?= $user->id?>" class="offset-sm-1 col-sm-4 btn btn-success">編集</a>
+                <a href="destroy.php?id=<?= $user->id ?>" class="offset-sm-2 col-sm-4 btn btn-danger">削除</a>
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

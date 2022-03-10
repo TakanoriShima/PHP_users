@@ -73,4 +73,25 @@
                 return 'PDO exception: ' . $e->getMessage();
             }
         }
+        
+        // 指定されたidからデータを1件取得するメソッド
+        public static function find($id){
+            try {
+                $pdo = self::get_connection();
+                $stmt = $pdo->prepare("SELECT * FROM users WHERE id=:id");
+                // バインド処理
+                $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                // 実行
+                $stmt->execute();
+                // フェッチの結果を、Userクラスのインスタンスにマッピングする
+                $stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'User');
+                $user = $stmt->fetch();
+                self::close_connection($pdo, $stmt);
+                // Userクラスのインスタンスを返す
+                return $user;
+                
+            } catch (PDOException $e) {
+                return 'PDO exception: ' . $e->getMessage();
+            }
+        }
     }
