@@ -37,7 +37,11 @@
             </div>
             <div class="row mt-3">
                 <a href="edit.php?id=<?= $user->id?>" class="offset-sm-1 col-sm-4 btn btn-success">編集</a>
-                <a href="destroy.php?id=<?= $user->id ?>" class="offset-sm-2 col-sm-4 btn btn-danger">削除</a>
+                <form class="offset-sm-2 col-sm-4 row" action="destroy.php" method="POST">
+                    <input type="hidden" name="id" value="<?= $user->id ?>">
+                    <input type="hidden" name="_token" value="<?= $token ?>">
+                    <button class="col-sm-12 btn btn-danger" type="submit" onclick="return confirm('本当に削除しますか?')">削除</button>
+                </form>
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

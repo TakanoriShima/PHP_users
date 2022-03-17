@@ -7,7 +7,11 @@
     // print $id;
     // データベースから指定されたidのデータを取得
     $user = User::find($id);
+    
+    $errors = $_SESSION['errors'];
+    $_SESSION['errors'] = null;
+    
     $token = session_id();
     // var_dump($user);
     // Viewの表示
-    include_once 'views/show_view.php';
+    include_once 'views/edit_view.php';

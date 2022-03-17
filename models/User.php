@@ -59,15 +59,32 @@
         public function save(){
             try {
                 $pdo = self::get_connection();
-                $stmt = $pdo->prepare("INSERT INTO users (name, age, gender) VALUES (:name, :age, :gender)");
-                // バインド処理
-                $stmt->bindParam(':name', $this->name, PDO::PARAM_STR);
-                $stmt->bindParam(':age', $this->age, PDO::PARAM_INT);
-                $stmt->bindParam(':gender', $this->gender, PDO::PARAM_STR);
-                // 実行
-                $stmt->execute();
+                // 新規ユーザー登録の時
+                if($this->id === null){
+                    $stmt = $pdo->prepare("INSERT INTO users (name, age, gender) VALUES (:name, :age, :gender)");
+                    // バインド処理
+                    $stmt->bindParam(':name', $this->name, PDO::PARAM_STR);
+                    $stmt->bindParam(':age', $this->age, PDO::PARAM_INT);
+                    $stmt->bindParam(':gender', $this->gender, PDO::PARAM_STR);
+                    // 実行
+                    $stmt->execute();
+                }else{ // 更新の時
+                    $stmt = $pdo->prepare("UPDATE users SET name=:name, age=:age, gender=:gender WHERE id=:id");
+                    // バインド処理
+                    $stmt->bindParam(':name', $this->name, PDO::PARAM_STR);
+                    $stmt->bindParam(':age', $this->age, PDO::PARAM_INT);
+                    $stmt->bindParam(':gender', $this->gender, PDO::PARAM_STR);
+                    $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+                    // 実行
+                    $stmt->execute();
+                }
+                
                 self::close_connection($pdo, $stmt);
-                return $this->name . "さんの新規ユーザー登録が成功しました。";
+                if($this->id === null){
+                    return $this->name . "さんの新規ユーザー登録が成功しました。";
+                }else{
+                    return $this->id . "のユーザー情報を更新しました。";
+                }
                 
             } catch (PDOException $e) {
                 return 'PDO exception: ' . $e->getMessage();
@@ -89,6 +106,41 @@
                 self::close_connection($pdo, $stmt);
                 // Userクラスのインスタンスを返す
                 return $user;
+                
+            } catch (PDOException $e) {
+                return 'PDO exception: ' . $e->getMessage();
+            }
+        }
+        
+        // インスタンスをMySQLから削除するメソッド
+        public function delete(){
+             try {
+                $pdo = self::get_connection();
+                $stmt = $pdo->prepare("DELETE FROM users WHERE id=:id");
+                // バインド処理
+                $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+    
+                // 実行
+                $stmt->execute();
+                self::close_connection($pdo, $stmt);
+                return $this->name . "さんの登録を削除しました。";
+                
+            } catch (PDOException $e) {
+                return 'PDO exception: ' . $e->getMessage();
+            }
+        }
+        
+        public static function destroy($id){
+             try {
+                $pdo = self::get_connection();
+                $stmt = $pdo->prepare("DELETE FROM users WHERE id=:id");
+                // バインド処理
+                $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                $name = (self::find($id))->name;
+                // 実行
+                $stmt->execute();
+                self::close_connection($pdo, $stmt);
+                return $name . "さんの登録を削除しました。";
                 
             } catch (PDOException $e) {
                 return 'PDO exception: ' . $e->getMessage();
