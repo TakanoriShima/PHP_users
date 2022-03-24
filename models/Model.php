@@ -12,7 +12,8 @@
                     PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',   //MySQL サーバーへの接続時に実行するコマンド
                 );
                 // データベースを扱う万能の神様誕生
-                $pdo = new PDO('mysql:host=localhost;dbname=user_register', 'root', '', $options);
+                // $pdo = new PDO('mysql:host=localhost;dbname=user_register', 'root', '', $options);
+                $pdo = new PDO('mysql:host=us-cdbr-east-05.cleardb.net;dbname=heroku_f7a9157680a6deb', 'bc8809960cc3e6', '0e5ed0be', $options);
                 return $pdo;
                 
             } catch (PDOException $e) {
