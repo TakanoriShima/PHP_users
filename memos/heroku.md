@@ -6,10 +6,10 @@ heroku login -i
 heroku create quark2galaxy-users
 heroku apps
 git remote -v
-echo "web: vendor/bin/heroku-php-apache2 public/" > Procfile
-git add .
-git commit -m 'Procfileを追加'
-git log
+<!--echo "web: vendor/bin/heroku-php-apache2 public/" > Procfile-->
+<!--git add .-->
+<!--git commit -m 'Procfileを追加'-->
+<!--git log-->
 
 heroku addons:create cleardb:ignite --app quark2galaxy-users --version=8.0
 heroku config --app quark2galaxy-users | grep CLEARDB_DATABASE_URL
@@ -34,4 +34,7 @@ select * from users;
 
 sudo service mysqld start
 mysqldump -u root user_register > dump.sql
+
+git add .
+git commit -m "Heroku設定完了"
 
